@@ -1,7 +1,6 @@
 package fr.cs.sio.moviesapi.model;
 
 import java.util.EnumSet;
-import java.util.List;
 
 public class Person {
 

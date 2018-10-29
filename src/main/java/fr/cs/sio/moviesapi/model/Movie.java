@@ -60,4 +60,10 @@ public class Movie {
     public void setGenres(EnumSet<Genre> genres) {
         this.genres = genres;
     }
+
+    @Override
+    public String toString() {
+        return getTitle();
+    }
+
 }
