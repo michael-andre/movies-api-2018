@@ -1,4 +1,4 @@
-package fr.cs.sio;
+package fr.cs.sio.moviesapi.services;
 
 import com.google.appengine.api.utils.SystemProperty;
 
