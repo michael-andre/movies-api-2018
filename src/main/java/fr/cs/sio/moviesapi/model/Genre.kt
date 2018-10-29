@@ -1,6 +1,6 @@
-package fr.cs.sio.moviesapi.model;
+package fr.cs.sio.moviesapi.model
 
-public enum Genre {
+enum class Genre {
 
     DRAMA,
     COMEDY,

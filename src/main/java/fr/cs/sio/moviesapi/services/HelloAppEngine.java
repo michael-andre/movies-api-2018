@@ -23,7 +23,7 @@ public class HelloAppEngine extends HttpServlet {
       throws IOException {
     response.setContentType("text/plain");
 
-    List<Movie> movies = MoviesRepository.getInstance().getMovies();
+    List<Movie> movies = MoviesRepository.Companion.getInstance().getMovies();
     response.getWriter().println(movies.toString());
 
   }

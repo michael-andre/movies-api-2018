@@ -4,8 +4,9 @@ import java.util.EnumSet
 
 class Person {
 
-    var id: Long = 0
+    var id = 0L
     var firstName: String? = null
     var lastName: String? = null
     var roles: EnumSet<Role>? = null
+
 }
