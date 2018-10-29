@@ -7,6 +7,8 @@ interface MoviesRepository {
 
     fun getMovies() : List<Movie>
 
+    fun getMovie(id: Long) : Movie?
+
     companion object {
 
         val instance: MoviesRepository
