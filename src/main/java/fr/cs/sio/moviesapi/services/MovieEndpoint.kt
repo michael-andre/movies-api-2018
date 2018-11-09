@@ -19,7 +19,7 @@ class MovieEndpoint : ApiEndpoint() {
     override fun doGet(request: HttpServletRequest, response: HttpServletResponse) {
 
         // Extract the id from the URL using a nice chain of method calls:
-        // - getPathInfo() on HttpServletRequest gives us access to the path part of URL (after the domain), as a List.
+        // - getPathInfo() on HttpServletRequest gives us access to the path part of URL (after the domain).
         // - split() on String allows us to obtain each parts of the path as a List of Strings.
         // - last() on List gives access to the last element (throws an exception if the list is empty).
         // - toLong() converts a String into a Long (throws an exception if the string is not a proper number).
