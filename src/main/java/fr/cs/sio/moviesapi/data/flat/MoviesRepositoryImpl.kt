@@ -1,7 +1,9 @@
 package fr.cs.sio.moviesapi.data.flat
 
 import fr.cs.sio.moviesapi.data.MoviesRepository
+import fr.cs.sio.moviesapi.model.Genre
 import fr.cs.sio.moviesapi.model.Movie
+import java.util.*
 
 /**
  * A concrete implementation of @{MoviesRepository} that will store data in-memory.
@@ -21,6 +23,7 @@ object MoviesRepositoryImpl : MoviesRepository {
                 // Kotlin: Inside this block, the scope (this) refers to the subject the apply() method is called on.
                 id = 1
                 title = "La Grande Vadrouille"
+                genres = EnumSet.of(Genre.COMEDY)
             }
     )
 
