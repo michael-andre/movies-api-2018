@@ -1,6 +1,9 @@
 package fr.cs.sio.moviesapi.services
 
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import fr.cs.sio.moviesapi.services.gson.LocalDateAdapter
+import fr.cs.sio.moviesapi.services.gson.EnumAdapterFactory
+import java.time.LocalDate
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletResponse
 
@@ -11,6 +14,11 @@ import javax.servlet.http.HttpServletResponse
 // This class has no abstract methods, neither do the parent class.
 // But this is still a good practice to make it abstract because we intend it to be subclassed.
 abstract class ApiEndpoint : HttpServlet() {
+
+    private val gson = GsonBuilder()
+            .registerTypeAdapterFactory(EnumAdapterFactory)
+            .registerTypeAdapter(LocalDate::class.java, LocalDateAdapter)
+            .create()
 
     /**
      * Utility method to write an abject to an @{HttpServletResponse} as JSON.
@@ -25,7 +33,7 @@ abstract class ApiEndpoint : HttpServlet() {
         response.contentType = "application/json"
 
         // Then we can convert the data object to JSON an write to the response.
-        response.writer.print(Gson().toJson(data))
+        response.writer.print(gson.toJson(data))
     }
 
 }

@@ -1,7 +1,13 @@
 package fr.cs.sio.moviesapi.services
 
 import fr.cs.sio.moviesapi.data.MoviesRepository
+import fr.cs.sio.moviesapi.model.ApiError
 import java.io.IOException
+import java.time.*
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
+import java.time.temporal.Temporal
+import java.time.temporal.TemporalQuery
 import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -27,8 +33,31 @@ class MoviesEndpoint : ApiEndpoint() {
     override fun doGet(request: HttpServletRequest, response: HttpServletResponse) {
         // Do NOT call super.doGet() in this case, since the parent implementation will send an error response!
 
-        //TODO: Here we could parse query parameters and pass them to the repository.
-        //val title = request.getParameter("title")
+        val q = request.getParameter("q")
+
+        val releaseDateParam = request.getParameter("releaseDate")
+        var releaseDateRange: ClosedRange<LocalDate>? = null
+        if (releaseDateParam != null) {
+            releaseDateRange = try {
+                when (val d = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parseBest(
+                        releaseDateParam,
+                        TemporalQuery(LocalDate::from),
+                        TemporalQuery(YearMonth::from),
+                        TemporalQuery(Year::from)
+                )) {
+                    is LocalDate -> d .. d
+                    is YearMonth -> d.atDay(1) .. d.atEndOfMonth()
+                    is Year -> d.atDay(1) .. d.atMonth(Month.DECEMBER).atEndOfMonth()
+                    else -> null
+                }
+            } catch (ex: DateTimeParseException) {
+                response.status = 400
+                sendJsonResponse(response, ApiError(
+                        "invalidParameter",
+                        "Invalid releaseDate parameter, should be in the format yyyy[-MM[-dd]]."))
+                return
+            }
+        }
 
         // Obtain the unique instance of the MoviesRepository, and get a list of movies.
         // Kotlin: We don't need to specify the variable type, the compiler can infer it from the getMovies() call.
